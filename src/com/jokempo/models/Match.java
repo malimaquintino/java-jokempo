@@ -1,30 +1,25 @@
 package com.jokempo.models;
 
-import com.jokempo.enums.HandOptions;
+import com.jokempo.enums.MatchResult;
 
 public class Match {
-    private final Hand player1;
-    private final Hand player2;
+    private final Player player1;
+    private final Player player2;
 
-    public Match(Hand player1, Hand player2) {
+    public Match(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
     }
 
-    public HandOptions winner(){
-
-        if (this.player1.getOption() == HandOptions.PAPER && this.player2.getOption() == HandOptions.ROCK || this.player2.getOption() == HandOptions.PAPER && this.player1.getOption() == HandOptions.ROCK){
-            return HandOptions.PAPER;
+    public MatchResult winner(){
+        if (player1.getHand().win(player2.getHand())){
+            return MatchResult.WINNER;
         }
 
-        if (this.player1.getOption() == HandOptions.SCISSORS && this.player2.getOption() == HandOptions.PAPER || this.player2.getOption() == HandOptions.SCISSORS && this.player1.getOption() == HandOptions.PAPER){
-            return HandOptions.SCISSORS;
+        if (player2.getHand().win(player1.getHand())){
+            return MatchResult.LOSER;
         }
 
-        if (this.player1.getOption()==HandOptions.ROCK && this.player2.getOption()==HandOptions.SCISSORS || this.player2.getOption()==HandOptions.ROCK && this.player1.getOption()==HandOptions.SCISSORS){
-            return HandOptions.ROCK;
-        }
-
-        return this.player1.getOption();
+        return MatchResult.DRAW;
     }
 }

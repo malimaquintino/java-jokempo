@@ -1,7 +1,7 @@
 package com.jokempo;
 
-import com.jokempo.enums.HandOptions;
-import com.jokempo.models.Hand;
+import com.jokempo.enums.Hand;
+import com.jokempo.models.Player;
 import com.jokempo.models.Match;
 
 import java.util.Locale;
@@ -12,6 +12,8 @@ public class App {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
 
+        System.out.println("Enter your name:");
+        String name = sc.nextLine();
         int opc = 99;
         while(opc != 0 ){
             System.out.println("");
@@ -21,27 +23,26 @@ public class App {
             System.out.println("3 - Scissors");
             System.out.println("0 - Exit");
             opc = sc.nextInt();
-            Hand p1 = new Hand();
+            Player p1 = new Player();
+            p1.setName(name);
             switch (opc){
                 case 0:
                     System.exit(0);
                 case 1:
-                    p1.setOption(HandOptions.ROCK);
+                    p1.setHand(Hand.ROCK);
                     break;
                 case 2:
-                    p1.setOption(HandOptions.PAPER);
+                    p1.setHand(Hand.PAPER);
                     break;
                 case 3:
-                    p1.setOption(HandOptions.SCISSORS);
+                    p1.setHand(Hand.SCISSORS);
             }
 
-            Hand p2 = new Hand();
-            p2.setRandomOption();
-
+            Player p2 = new Player("BOT", Hand.randomHand());
             Match match = new Match(p1, p2);
 
-            System.out.println(p1.getOption()+" x "+p2.getOption());
-            System.out.println("Winner: "+match.winner());
+            System.out.println(p1.getHand()+" x "+p2.getHand());
+            System.out.println("You "+match.winner());
         }
     }
 }
